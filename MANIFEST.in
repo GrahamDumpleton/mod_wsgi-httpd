@@ -2,3 +2,9 @@ include LICENSE
 include README.rst
 include _modules.c
 include src/apxs
+exclude src/httpd/bin
+exclude src/httpd/build
+exclude src/httpd/conf
+exclude src/httpd/include
+exclude src/httpd/lib
+exclude src/httpd/modules
