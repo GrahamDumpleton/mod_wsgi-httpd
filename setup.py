@@ -44,8 +44,13 @@ PCRE_URL = SF_URL + 'pcre/pcre/%s/pcre-%s.tar.gz' % (PCRE_VERSION,
 
 download_url(PCRE_URL)
 
-VERSIONS_HASH = hashlib.md5(':'.join([APR_VERSION, APR_UTIL_VERSION,
-        PCRE_VERSION, HTTPD_VERSION])).hexdigest()
+VERSIONS_HASH = ':'.join([APR_VERSION, APR_UTIL_VERSION,
+        PCRE_VERSION, HTTPD_VERSION])
+
+if not isinstance(VERSIONS_HASH, bytes):
+    VERSIONS_HASH = VERSIONS_HASH.encode('UTF-8')
+
+VERSIONS_HASH = hashlib.md5(VERSIONS_HASH).hexdigest()
 
 VERSION_HASH_FILE = os.path.join('build', VERSIONS_HASH)
 
