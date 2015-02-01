@@ -55,13 +55,11 @@ if not os.path.isfile(VERSION_HASH_FILE):
 
     shutil.rmtree('build/httpd', ignore_errors=True)
 
-    builddir = os.path.join(os.path.abspath(
-            os.path.dirname(__file__)), 'build/httpd')
+    builddir = os.path.join(os.getcwd(), 'build/httpd')
 
     shutil.rmtree('src/httpd', ignore_errors=True)
 
-    destdir = os.path.join(os.path.abspath(
-            os.path.dirname(__file__)), 'src/httpd')
+    destdir = os.path.join(os.getcwd(), 'src/httpd')
 
     res = os.system('rm -rf build/apr-%(version)s && '
             'tar -x -v -C build -f apr-%(version)s.tar.gz && '
