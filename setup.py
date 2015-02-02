@@ -116,6 +116,7 @@ if not os.path.isfile(VERSION_HASH_FILE):
     shutil.rmtree('build/httpd/error', ignore_errors=True)
     shutil.rmtree('build/httpd/htdocs', ignore_errors=True)
     shutil.rmtree('build/httpd/icons', ignore_errors=True)
+    shutil.rmtree('build/httpd/logs', ignore_errors=True)
     shutil.rmtree('build/httpd/man', ignore_errors=True)
     shutil.rmtree('build/httpd/manual', ignore_errors=True)
     shutil.rmtree('build/httpd/share', ignore_errors=True)
