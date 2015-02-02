@@ -65,18 +65,6 @@ CONFIG['BINDIR'] = get_vars('bindir')
 CONFIG['SBINDIR'] = get_vars('sbindir')
 CONFIG['PROGNAME'] = get_vars('progname')
 
-_CFLAGS_NAMES = ['SHLTCFLAGS', 'CFLAGS', 'NOTEST_CPPFLAGS',
-    'EXTRA_CPPFLAGS', 'EXTRA_CFLAGS']
-
-_CFLAGS_VALUES = []
-
-for name in _CFLAGS_NAMES:
-    value = get_vars(name)
-    if value:
-        _CFLAGS_VALUES.append(value)
-
-CONFIG['CFLAGS'] = ' '.join(_CFLAGS_VALUES)
-
 def main():
     if len(sys.argv) <= 1 or sys.argv[1] != '-q':
         print('Usage: mod_wsgi-apxs -q <query> ...')
