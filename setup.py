@@ -90,7 +90,8 @@ if not os.path.isfile(VERSION_HASH_FILE):
     res = os.system('rm -rf build/pcre-%(version)s && '
             'tar -x -v -C build -f pcre-%(version)s.tar.gz && '
             'cd build/pcre-%(version)s && '
-            './configure --prefix=%(builddir)s && '
+            './configure --prefix=%(builddir)s '
+            '--disable-cpp && '
             'make && make install' % dict(builddir=builddir,
             version=PCRE_VERSION))
 
