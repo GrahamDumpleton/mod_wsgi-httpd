@@ -174,10 +174,11 @@ setup(name = 'mod_wsgi-httpd',
         'Topic :: Internet :: WWW/HTTP :: WSGI',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Server'
     ],
-    packages = ['mod_wsgi', 'mod_wsgi.httpd', 'mod_wsgi.apxs'],
-    package_dir = {'mod_wsgi': 'src'},
-    package_data = {'mod_wsgi': package_files},
-    ext_modules = [Extension("mod_wsgi.apxs._dummy", ["_module.c"])],
+    packages = ['mod_wsgi_packages', 'mod_wsgi_packages.httpd',
+            'mod_wsgi_packages.apxs'],
+    package_dir = {'mod_wsgi_packages': 'src'},
+    package_data = {'mod_wsgi_packages': package_files},
+    ext_modules = [Extension("mod_wsgi_packages.apxs._dummy", ["_module.c"])],
     entry_points = { 'console_scripts':
-            ['mod_wsgi-apxs = mod_wsgi.apxs.__main__:main'],},
+            ['mod_wsgi-apxs = mod_wsgi_packages.apxs.__main__:main'],},
 )
