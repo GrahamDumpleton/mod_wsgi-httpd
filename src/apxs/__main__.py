@@ -4,7 +4,7 @@ import os
 import re
 import sys
 
-from mod_wsgi.httpd import __file__ as PACKAGES_ROOTDIR
+from ..httpd import __file__ as PACKAGES_ROOTDIR
 
 PACKAGES_ROOTDIR = os.path.dirname(PACKAGES_ROOTDIR)
 CONFIG_FILE = os.path.join(PACKAGES_ROOTDIR, 'build/config_vars.mk')
