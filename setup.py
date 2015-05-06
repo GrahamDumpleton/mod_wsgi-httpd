@@ -23,7 +23,7 @@ def download_url(url):
 
 ASF_URL = 'http://www.us.apache.org/dist/'
 
-APR_VERSION = '1.5.1'
+APR_VERSION = '1.5.2'
 APR_UTIL_VERSION = '1.5.4'
 HTTPD_VERSION = '2.4.12'
 
@@ -35,9 +35,9 @@ download_url(APR_URL)
 download_url(APR_UTIL_URL)
 download_url(HTTPD_URL)
 
-SF_URL = 'http://downloads.sourceforge.net/project/'
+SF_URL = 'http://softlayer-dal.dl.sourceforge.net/project/'
 
-PCRE_VERSION = '8.36'
+PCRE_VERSION = '8.37'
 
 PCRE_URL = SF_URL + 'pcre/pcre/%s/pcre-%s.tar.gz' % (PCRE_VERSION,
         PCRE_VERSION)
@@ -146,7 +146,7 @@ for root, dirs, files in os.walk('src/httpd', topdown=False):
         print('adding ', path)
 
 setup(name = 'mod_wsgi-httpd',
-    version = '%s.4' % HTTPD_VERSION,
+    version = '%s.5' % HTTPD_VERSION,
     description = 'Installer for Apache httpd server.',
     author = 'Graham Dumpleton',
     author_email = 'Graham.Dumpleton@gmail.com',
