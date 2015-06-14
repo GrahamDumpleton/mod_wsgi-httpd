@@ -146,7 +146,7 @@ for root, dirs, files in os.walk('src/httpd', topdown=False):
         print('adding ', path)
 
 setup(name = 'mod_wsgi-httpd',
-    version = '%s.5' % HTTPD_VERSION,
+    version = '%s.6' % HTTPD_VERSION,
     description = 'Installer for Apache httpd server.',
     author = 'Graham Dumpleton',
     author_email = 'Graham.Dumpleton@gmail.com',
