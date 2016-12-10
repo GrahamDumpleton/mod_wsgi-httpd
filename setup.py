@@ -126,7 +126,7 @@ if not os.path.isfile(VERSION_HASH_FILE):
         config_vars = fpin.readlines()
 
     with open('build/httpd/build/config_vars.mk', 'w') as fpout:
-        prefix = os.path.join(os.getcwd(), 'build/httpd')
+        prefix = re.escape(os.path.join(os.getcwd(), 'build/httpd'))
         for line in config_vars:
             line = re.sub(prefix, '${mod_wsgi_httpd_prefix}', line)
             print(line, end='', file=fpout)
@@ -146,7 +146,7 @@ for root, dirs, files in os.walk('src/httpd', topdown=False):
         print('adding ', path)
 
 setup(name = 'mod_wsgi-httpd',
-    version = '%s.1' % HTTPD_VERSION,
+    version = '%s.2' % HTTPD_VERSION,
     description = 'Installer for Apache httpd server.',
     author = 'Graham Dumpleton',
     author_email = 'Graham.Dumpleton@gmail.com',
