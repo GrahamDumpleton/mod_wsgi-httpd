@@ -1,3 +1,6 @@
+Overview
+--------
+
 The ``mod_wsgi-httpd`` package is a companion package for mod_wsgi. It will
 compile and install a copy of the Apache httpd server into your Python
 installation. If this is done, when the ``mod_wsgi`` package is

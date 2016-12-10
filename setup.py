@@ -145,15 +145,18 @@ for root, dirs, files in os.walk('src/httpd', topdown=False):
         package_files.append(path)
         print('adding ', path)
 
+long_description = open('README.rst').read()
+
 setup(name = 'mod_wsgi-httpd',
     version = '%s.2' % HTTPD_VERSION,
     description = 'Installer for Apache httpd server.',
+    long_description = long_description,
     author = 'Graham Dumpleton',
     author_email = 'Graham.Dumpleton@gmail.com',
     maintainer = 'Graham Dumpleton',
     maintainer_email = 'Graham.Dumpleton@gmail.com',
     url = 'http://www.modwsgi.org/',
-    #bugtrack_url = 'https://github.com/GrahamDumpleton/mod_wsgi/issues',
+    bugtrack_url = 'https://github.com/GrahamDumpleton/mod_wsgi-httpd/issues',
     license = 'Apache License, Version 2.0',
     platforms = [],
     download_url = None,
@@ -171,6 +174,7 @@ setup(name = 'mod_wsgi-httpd',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Internet :: WWW/HTTP :: WSGI',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Server'
     ],
