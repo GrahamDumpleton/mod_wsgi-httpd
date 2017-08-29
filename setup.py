@@ -21,11 +21,11 @@ def download_url(url):
         os.rename(package+'.download', package)
     return package
 
-ASF_URL = 'http://www.us.apache.org/dist/'
+ASF_URL = 'https://archive.apache.org/dist/'
 
-APR_VERSION = '1.5.2'
-APR_UTIL_VERSION = '1.5.4'
-HTTPD_VERSION = '2.4.23'
+APR_VERSION = '1.6.2'
+APR_UTIL_VERSION = '1.6.0'
+HTTPD_VERSION = '2.4.27'
 
 APR_URL = ASF_URL + 'apr/apr-%s.tar.gz' % APR_VERSION
 APR_UTIL_URL = ASF_URL + 'apr/apr-util-%s.tar.gz' % APR_UTIL_VERSION
@@ -37,7 +37,7 @@ download_url(HTTPD_URL)
 
 SF_URL = 'http://internode.dl.sourceforge.net/project/'
 
-PCRE_VERSION = '8.39'
+PCRE_VERSION = '8.41'
 
 PCRE_URL = SF_URL + 'pcre/pcre/%s/pcre-%s.tar.gz' % (PCRE_VERSION,
         PCRE_VERSION)
@@ -148,7 +148,7 @@ for root, dirs, files in os.walk('src/httpd', topdown=False):
 long_description = open('README.rst').read()
 
 setup(name = 'mod_wsgi-httpd',
-    version = '%s.2' % HTTPD_VERSION,
+    version = '%s.1' % HTTPD_VERSION,
     description = 'Installer for Apache httpd server.',
     long_description = long_description,
     author = 'Graham Dumpleton',
