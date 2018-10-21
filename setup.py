@@ -23,9 +23,9 @@ def download_url(url):
 
 ASF_URL = 'https://archive.apache.org/dist/'
 
-APR_VERSION = '1.6.2'
-APR_UTIL_VERSION = '1.6.0'
-HTTPD_VERSION = '2.4.27'
+APR_VERSION = '1.6.5'
+APR_UTIL_VERSION = '1.6.1'
+HTTPD_VERSION = '2.4.35'
 
 APR_URL = ASF_URL + 'apr/apr-%s.tar.gz' % APR_VERSION
 APR_UTIL_URL = ASF_URL + 'apr/apr-util-%s.tar.gz' % APR_UTIL_VERSION
@@ -37,7 +37,7 @@ download_url(HTTPD_URL)
 
 SF_URL = 'http://internode.dl.sourceforge.net/project/'
 
-PCRE_VERSION = '8.41'
+PCRE_VERSION = '8.42'
 
 PCRE_URL = SF_URL + 'pcre/pcre/%s/pcre-%s.tar.gz' % (PCRE_VERSION,
         PCRE_VERSION)
