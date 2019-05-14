@@ -23,9 +23,9 @@ def download_url(url):
 
 ASF_URL = 'https://archive.apache.org/dist/'
 
-APR_VERSION = '1.6.5'
+APR_VERSION = '1.7.0'
 APR_UTIL_VERSION = '1.6.1'
-HTTPD_VERSION = '2.4.35'
+HTTPD_VERSION = '2.4.39'
 
 APR_URL = ASF_URL + 'apr/apr-%s.tar.gz' % APR_VERSION
 APR_UTIL_URL = ASF_URL + 'apr/apr-util-%s.tar.gz' % APR_UTIL_VERSION
@@ -37,7 +37,7 @@ download_url(HTTPD_URL)
 
 SF_URL = 'http://internode.dl.sourceforge.net/project/'
 
-PCRE_VERSION = '8.42'
+PCRE_VERSION = '8.43'
 
 PCRE_URL = SF_URL + 'pcre/pcre/%s/pcre-%s.tar.gz' % (PCRE_VERSION,
         PCRE_VERSION)
@@ -174,6 +174,7 @@ setup(name = 'mod_wsgi-httpd',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Internet :: WWW/HTTP :: WSGI',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Server'
     ],

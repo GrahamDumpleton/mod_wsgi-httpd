@@ -8,7 +8,7 @@ prune src/httpd/conf
 prune src/httpd/include
 prune src/httpd/lib
 prune src/httpd/modules
-include apr-1.6.5.tar.gz
+include apr-1.7.0.tar.gz
 include apr-util-1.6.1.tar.gz
-include httpd-2.4.35.tar.gz
-include pcre-8.42.tar.gz
+include httpd-2.4.39.tar.gz
+include pcre-8.43.tar.gz
