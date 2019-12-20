@@ -39,6 +39,19 @@ To subsequently install the mod_wsgi package and mod_wsgi-express::
 
     pip install mod_wsgi
 
+Installation of each package needs to be done separately, you cannot list
+both in a ``requirements.txt`` file because the ``mod_wsgi-httpd`` package
+will not be installed before ``pip`` processes the ``mod_wsgi`` package.
+As a result the installation of ``mod_wsgi`` may fail, or the system Apache
+will still be used if available.
+
+If you need to install packages using ``pip`` from a ``requirements.txt``
+file, or other similar Python package installer, you should instead
+install the ``mod_wsgi-standalone`` package. This is a special variant
+of the ``mod_wsgi`` package that will ensure that ``mod_wsgi-httpd`` is
+installed first. Ensure you have an up to date version of ``pip`` which
+understands ``pyproject.toml`` files when using this option.
+
 To run mod_wsgi-express::
 
     mod_wsgi-express start-server
