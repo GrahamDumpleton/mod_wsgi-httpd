@@ -25,7 +25,7 @@ ASF_URL = 'https://archive.apache.org/dist/'
 
 APR_VERSION = '1.7.0'
 APR_UTIL_VERSION = '1.6.1'
-HTTPD_VERSION = '2.4.48'
+HTTPD_VERSION = '2.4.54'
 
 APR_URL = ASF_URL + 'apr/apr-%s.tar.gz' % APR_VERSION
 APR_UTIL_URL = ASF_URL + 'apr/apr-util-%s.tar.gz' % APR_UTIL_VERSION
@@ -37,7 +37,8 @@ download_url(HTTPD_URL)
 
 PCRE_VERSION = '8.45'
 
-PCRE_URL = 'https://ftp.pcre.org/pub/pcre/pcre-%s.tar.gz' % PCRE_VERSION
+#PCRE_URL = 'https://ftp.pcre.org/pub/pcre/pcre-%s.tar.gz' % PCRE_VERSION
+PCRE_URL = 'https://ixpeering.dl.sourceforge.net/project/pcre/pcre/%s/pcre-%s.tar.gz' % (PCRE_VERSION, PCRE_VERSION)
 
 download_url(PCRE_URL)
 
