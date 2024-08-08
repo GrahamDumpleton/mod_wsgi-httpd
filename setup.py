@@ -23,9 +23,9 @@ def download_url(url):
 
 ASF_URL = 'https://archive.apache.org/dist/'
 
-APR_VERSION = '1.7.0'
-APR_UTIL_VERSION = '1.6.1'
-HTTPD_VERSION = '2.4.54'
+APR_VERSION = '1.7.4'
+APR_UTIL_VERSION = '1.6.3'
+HTTPD_VERSION = '2.4.62'
 
 APR_URL = ASF_URL + 'apr/apr-%s.tar.gz' % APR_VERSION
 APR_UTIL_URL = ASF_URL + 'apr/apr-util-%s.tar.gz' % APR_UTIL_VERSION
