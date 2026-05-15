@@ -1,10 +1,16 @@
+name: mod_wsgi-httpd (build/test/release)
+
 on:
+  workflow_dispatch:
   push:
     branches:
-      - master
+      - develop
+    tags:
+      - "mod_wsgi-httpd-[0-9]+.[0-9]+.[0-9]+.[0-9]+"
+      - "mod_wsgi-httpd-[0-9]+.[0-9]+.[0-9]+.[0-9]+dev[0-9]+"
   pull_request:
     branches:
-      - master
+      - develop
 
 jobs:
   build:
@@ -15,6 +21,25 @@ jobs:
       - uses: "actions/setup-python@v2"
         with:
           python-version: "3.9"
+      - name: "Verify version matches tag"
+        if: startsWith(github.ref, 'refs/tags/mod_wsgi-httpd-')
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          EXPECTED="${TAG#mod_wsgi-httpd-}"
+          ACTUAL="$(python <<'PYEOF'
+          import re
+          with open('setup.py') as f:
+              content = f.read()
+          httpd = re.search(r"HTTPD_VERSION\s*=\s*'([^']+)'", content).group(1)
+          suffix = re.search(r"version\s*=\s*'%s([^']*)'\s*%\s*HTTPD_VERSION", content).group(1)
+          print(httpd + suffix)
+          PYEOF
+          )"
+          if [ "$ACTUAL" != "$EXPECTED" ]; then
+              echo "Tag version ($EXPECTED) does not match version computed from setup.py ($ACTUAL)" >&2
+              exit 1
+          fi
+          echo "Version match: $ACTUAL"
       - name: "Build mod_wsgi packages"
         run: python setup.py sdist && ls -las dist
       - name: "Store built packages"
@@ -43,3 +68,112 @@ jobs:
         run: python -m pip install --verbose dist/mod_wsgi-httpd-[0-9].*.tar.gz
       - name: "Check mod_wsgi-apxs"
         run: mod_wsgi-apxs -q BINDIR
+
+  release:
+    name: "Publish GitHub release"
+    runs-on: "ubuntu-20.04"
+    needs:
+    - tests
+    if: startsWith(github.ref, 'refs/tags/mod_wsgi-httpd-')
+    permissions:
+      contents: write
+    steps:
+      - name: "Resolve version and prerelease status"
+        id: meta
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#mod_wsgi-httpd-}"
+          BASE_VERSION="$(echo "$VERSION" | sed -E 's/dev[0-9]+$//')"
+          if [[ "$VERSION" == *dev* ]]; then
+              PRERELEASE="true"
+          else
+              PRERELEASE="false"
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "base_version=$BASE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "prerelease=$PRERELEASE" >> "$GITHUB_OUTPUT"
+
+      - name: "Download built packages"
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+      - name: "Generate SHA256SUMS"
+        run: |
+          cd dist
+          sha256sum * > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: "Write release notes body"
+        run: |
+          VERSION="${{ steps.meta.outputs.version }}"
+          if [[ "$VERSION" == *dev* ]]; then
+              cat > body.md <<EOF
+          Development snapshot of mod_wsgi-httpd. Not normally published
+          to PyPi (occasionally uploaded to exercise the release
+          pipeline).
+
+          Build from the attached source distribution:
+
+              tar xf mod_wsgi-httpd-${VERSION}.tar.gz
+              cd mod_wsgi-httpd-${VERSION}
+              pip install .
+
+          \`SHA256SUMS\` is attached for verification of the source
+          archive.
+          EOF
+          else
+              cat > body.md <<EOF
+          Install from PyPi (recommended):
+
+              pip install mod_wsgi-httpd==${VERSION}
+
+          The mod_wsgi-httpd package bundles a private build of Apache
+          httpd; the leading numeric components track the bundled httpd
+          version.
+
+          If \`pip\` reports the version is unavailable, the matching
+          PyPi upload may not have happened yet. The source archive is
+          attached together with \`SHA256SUMS\` for verification.
+          EOF
+          fi
+          cat body.md
+
+      - name: "Create GitHub release"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          FLAGS=()
+          if [[ "${{ steps.meta.outputs.prerelease }}" == "true" ]]; then
+              FLAGS+=("--prerelease")
+          fi
+          gh release create "${{ steps.meta.outputs.tag }}" \
+              --title "mod_wsgi-httpd ${{ steps.meta.outputs.version }}" \
+              --notes-file body.md \
+              "${FLAGS[@]}" \
+              dist/*
+
+  publish:
+    name: "Publish to PyPi"
+    runs-on: "ubuntu-20.04"
+    needs:
+    - release
+    # Disabled until PyPi trusted publishing is configured for
+    # mod_wsgi-httpd. Re-enable by removing the `false && ` prefix below.
+    if: false && startsWith(github.ref, 'refs/tags/mod_wsgi-httpd-')
+    environment: pypi-mod-wsgi-httpd
+    permissions:
+      id-token: write
+    steps:
+      - name: "Download built packages"
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: "Publish to PyPi"
+        uses: "pypa/gh-action-pypi-publish@release/v1"
+        with:
+          packages-dir: dist/
