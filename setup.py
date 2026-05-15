@@ -1,20 +1,17 @@
-from __future__ import print_function
-
 import os
 import shutil
 import re
 import hashlib
 
-try:
-    from urllib.request import urlretrieve
-except ImportError:
-    from urllib import urlretrieve
+from urllib.request import urlretrieve
 
-from setuptools import setup
-from distutils.core import Extension
+from setuptools import setup, Extension
+
+UPSTREAM_DIR = 'upstream'
 
 def download_url(url):
-    package = os.path.basename(url)
+    os.makedirs(UPSTREAM_DIR, exist_ok=True)
+    package = os.path.join(UPSTREAM_DIR, os.path.basename(url))
     if not os.path.isfile(package):
         print('Downloading', url)
         urlretrieve(url, package+'.download')
@@ -43,10 +40,7 @@ PCRE_URL = 'https://ixpeering.dl.sourceforge.net/project/pcre/pcre/%s/pcre-%s.ta
 download_url(PCRE_URL)
 
 VERSIONS_HASH = ':'.join([APR_VERSION, APR_UTIL_VERSION,
-        PCRE_VERSION, HTTPD_VERSION])
-
-if not isinstance(VERSIONS_HASH, bytes):
-    VERSIONS_HASH = VERSIONS_HASH.encode('UTF-8')
+        PCRE_VERSION, HTTPD_VERSION]).encode('UTF-8')
 
 VERSIONS_HASH = hashlib.md5(VERSIONS_HASH).hexdigest()
 
@@ -65,7 +59,7 @@ if not os.path.isfile(VERSION_HASH_FILE):
     destdir = os.path.join(os.getcwd(), 'src/httpd')
 
     res = os.system('rm -rf build/apr-%(version)s && '
-            'tar -x -v -C build -f apr-%(version)s.tar.gz && '
+            'tar -x -v -C build -f upstream/apr-%(version)s.tar.gz && '
             'cd build/apr-%(version)s && '
             './configure --prefix=%(builddir)s && '
             'make && make install' % dict(builddir=builddir,
@@ -75,7 +69,7 @@ if not os.path.isfile(VERSION_HASH_FILE):
         raise RuntimeError('Failed to build APR.')
 
     res = os.system('rm -rf build/apr-util-%(version)s && '
-            'tar -x -v -C build -f apr-util-%(version)s.tar.gz && '
+            'tar -x -v -C build -f upstream/apr-util-%(version)s.tar.gz && '
             'cd build/apr-util-%(version)s && '
             './configure --prefix=%(builddir)s '
             '--with-apr=%(builddir)s/bin/apr-1-config && '
@@ -86,7 +80,7 @@ if not os.path.isfile(VERSION_HASH_FILE):
         raise RuntimeError('Failed to build APR-UTIL.')
 
     res = os.system('rm -rf build/pcre-%(version)s && '
-            'tar -x -v -C build -f pcre-%(version)s.tar.gz && '
+            'tar -x -v -C build -f upstream/pcre-%(version)s.tar.gz && '
             'cd build/pcre-%(version)s && '
             './configure --prefix=%(builddir)s '
             '--disable-cpp && '
@@ -97,7 +91,7 @@ if not os.path.isfile(VERSION_HASH_FILE):
         raise RuntimeError('Failed to build PCRE.')
 
     res = os.system('rm -rf build/httpd-%(version)s && '
-            'tar -x -v -C build -f httpd-%(version)s.tar.gz && '
+            'tar -x -v -C build -f upstream/httpd-%(version)s.tar.gz && '
             'cd build/httpd-%(version)s && '
             './configure --prefix=%(builddir)s '
             '--enable-mpms-shared=all --enable-so --enable-rewrite '
@@ -146,7 +140,7 @@ for root, dirs, files in os.walk('src/httpd', topdown=False):
 long_description = open('README.rst').read()
 
 setup(name = 'mod_wsgi-httpd',
-    version = '%s.1' % HTTPD_VERSION,
+    version = '%s.1dev1' % HTTPD_VERSION,
     description = 'Installer for Apache httpd server.',
     long_description = long_description,
     author = 'Graham Dumpleton',
@@ -165,14 +159,13 @@ setup(name = 'mod_wsgi-httpd',
         'Operating System :: POSIX',
         'Operating System :: POSIX :: BSD',
         'Operating System :: POSIX :: Linux',
-        'Operating System :: POSIX :: SunOS/Solaris',
         'Programming Language :: Python',
         'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
         'Topic :: Internet :: WWW/HTTP :: WSGI',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Server'
     ],
