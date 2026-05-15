@@ -140,7 +140,7 @@ for root, dirs, files in os.walk('src/httpd', topdown=False):
 long_description = open('README.rst').read()
 
 setup(name = 'mod_wsgi-httpd',
-    version = '%s.1dev1' % HTTPD_VERSION,
+    version = '%s.1.dev1' % HTTPD_VERSION,
     description = 'Installer for Apache httpd server.',
     long_description = long_description,
     author = 'Graham Dumpleton',
