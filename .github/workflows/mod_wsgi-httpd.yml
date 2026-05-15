@@ -85,7 +85,7 @@ jobs:
         run: |
           TAG="${GITHUB_REF_NAME}"
           VERSION="${TAG#mod_wsgi-httpd-}"
-          BASE_VERSION="$(echo "$VERSION" | sed -E 's/dev[0-9]+$//')"
+          BASE_VERSION="$(echo "$VERSION" | sed -E 's/\.?dev[0-9]+$//')"
           if [[ "$VERSION" == *dev* ]]; then
               PRERELEASE="true"
           else
