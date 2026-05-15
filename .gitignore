@@ -7,3 +7,4 @@ venv
 src/httpd
 *.gz
 .venv
+*.so
