@@ -163,9 +163,7 @@ jobs:
     runs-on: "ubuntu-24.04"
     needs:
     - release
-    # Disabled until PyPi trusted publishing is configured for
-    # mod_wsgi-httpd. Re-enable by removing the `false && ` prefix below.
-    if: false && startsWith(github.ref, 'refs/tags/mod_wsgi-httpd-')
+    if: startsWith(github.ref, 'refs/tags/mod_wsgi-httpd-')
     environment: pypi-mod-wsgi-httpd
     permissions:
       id-token: write
