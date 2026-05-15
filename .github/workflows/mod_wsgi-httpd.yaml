@@ -40,6 +40,8 @@ jobs:
               exit 1
           fi
           echo "Version match: $ACTUAL"
+      - name: "Update pip installation"
+        run: python -m pip install --upgrade pip setuptools wheel
       - name: "Build mod_wsgi packages"
         run: python setup.py sdist && ls -las dist
       - name: "Store built packages"
