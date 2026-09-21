@@ -93,6 +93,13 @@ Documentation for ``mod_wsgi``, ``mod_wsgi-standalone`` and
 ``mod_wsgi-express`` lives at https://www.modwsgi.org/. Pages of
 particular relevance to ``mod_wsgi-httpd`` users:
 
+* `The mod_wsgi-standalone Package
+  <https://www.modwsgi.org/en/latest/user-guides/mod-wsgi-standalone-package.html>`_
+  covers how ``mod_wsgi-httpd``, ``mod_wsgi-standalone`` and
+  ``mod_wsgi`` relate, what the host needs in order to compile this
+  package, how support for HTTPS depends on the OpenSSL development
+  files being present at that time, and how security fixes for Apache
+  reach you.
 * `Installation from PyPI
   <https://www.modwsgi.org/en/latest/user-guides/installation-from-pypi.html>`_
   covers ``pip install mod_wsgi``, the ``mod_wsgi-express`` command,
