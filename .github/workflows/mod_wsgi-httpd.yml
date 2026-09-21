@@ -56,6 +56,7 @@ jobs:
     needs:
     - build
     steps:
+      - uses: "actions/checkout@v6"
       - uses: "actions/setup-python@v6"
         with:
           python-version: "3.12"
@@ -70,6 +71,23 @@ jobs:
         run: python -m pip install --verbose dist/mod_wsgi_httpd-[0-9]*.tar.gz
       - name: "Check mod_wsgi-apxs"
         run: mod_wsgi-apxs -q BINDIR
+      # The exit status of httpd is ignored as it will be non zero due
+      # to there being no configuration file at the location compiled
+      # into it. What matters is that it runs and reports PCRE2.
+      - name: "Check httpd binary"
+        run: |
+          BINDIR="$(mod_wsgi-apxs -q BINDIR)"
+          LIBDIR="$(dirname "$BINDIR")/lib"
+          LD_LIBRARY_PATH="$LIBDIR" "$BINDIR/httpd" -V > httpd-version.txt 2>&1 || true
+          cat httpd-version.txt
+          grep -E '^Compiled using: .* PCRE 1[0-9]\.' httpd-version.txt
+      # Build isolation must be disabled. In an isolated build the
+      # mod_wsgi-apxs command run by the mod_wsgi setup.py cannot import
+      # the mod_wsgi_packages module it depends on.
+      - name: "Install mod_wsgi"
+        run: python -m pip install --verbose --no-build-isolation mod_wsgi
+      - name: "Run mod_wsgi-express test"
+        run: scripts/run-single-test.sh
 
   release:
     name: "Publish GitHub release"

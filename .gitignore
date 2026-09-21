@@ -8,3 +8,4 @@ src/httpd
 *.gz
 .venv
 *.so
+httpd-test
