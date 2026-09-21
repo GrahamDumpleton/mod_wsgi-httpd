@@ -9,3 +9,4 @@ src/httpd
 .venv
 *.so
 httpd-test
+scratch
