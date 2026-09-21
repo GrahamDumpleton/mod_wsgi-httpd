@@ -22,7 +22,7 @@ You normally do not need to install ``mod_wsgi-httpd`` yourself;
 **Note:** If your operating system's Apache and the matching Apache
 development packages are available, prefer those over
 ``mod_wsgi-standalone``. Building ``mod_wsgi-httpd`` compiles
-Apache, APR, APR-util and PCRE from source, which can take several
+Apache, APR, APR-util and PCRE2 from source, which can take several
 minutes; if ``pip install -v mod_wsgi-standalone`` looks like it is
 hanging, it is almost certainly still compiling ``mod_wsgi-httpd``.
 

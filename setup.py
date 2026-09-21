@@ -21,7 +21,7 @@ def download_url(url):
 ASF_URL = 'https://archive.apache.org/dist/'
 
 APR_VERSION = '1.7.6'
-APR_UTIL_VERSION = '1.6.3'
+APR_UTIL_VERSION = '1.6.5'
 HTTPD_VERSION = '2.4.68'
 
 APR_URL = ASF_URL + 'apr/apr-%s.tar.gz' % APR_VERSION
@@ -32,15 +32,14 @@ download_url(APR_URL)
 download_url(APR_UTIL_URL)
 download_url(HTTPD_URL)
 
-PCRE_VERSION = '8.45'
+PCRE2_VERSION = '10.48'
 
-#PCRE_URL = 'https://ftp.pcre.org/pub/pcre/pcre-%s.tar.gz' % PCRE_VERSION
-PCRE_URL = 'https://ixpeering.dl.sourceforge.net/project/pcre/pcre/%s/pcre-%s.tar.gz' % (PCRE_VERSION, PCRE_VERSION)
+PCRE2_URL = 'https://github.com/PCRE2Project/pcre2/releases/download/pcre2-%s/pcre2-%s.tar.gz' % (PCRE2_VERSION, PCRE2_VERSION)
 
-download_url(PCRE_URL)
+download_url(PCRE2_URL)
 
 VERSIONS_HASH = ':'.join([APR_VERSION, APR_UTIL_VERSION,
-        PCRE_VERSION, HTTPD_VERSION]).encode('UTF-8')
+        PCRE2_VERSION, HTTPD_VERSION]).encode('UTF-8')
 
 VERSIONS_HASH = hashlib.md5(VERSIONS_HASH).hexdigest()
 
@@ -79,16 +78,15 @@ if not os.path.isfile(VERSION_HASH_FILE):
     if res:
         raise RuntimeError('Failed to build APR-UTIL.')
 
-    res = os.system('rm -rf build/pcre-%(version)s && '
-            'tar -x -v -C build -f upstream/pcre-%(version)s.tar.gz && '
-            'cd build/pcre-%(version)s && '
-            './configure --prefix=%(builddir)s '
-            '--disable-cpp && '
+    res = os.system('rm -rf build/pcre2-%(version)s && '
+            'tar -x -v -C build -f upstream/pcre2-%(version)s.tar.gz && '
+            'cd build/pcre2-%(version)s && '
+            './configure --prefix=%(builddir)s && '
             'make && make install' % dict(builddir=builddir,
-            version=PCRE_VERSION))
+            version=PCRE2_VERSION))
 
     if res:
-        raise RuntimeError('Failed to build PCRE.')
+        raise RuntimeError('Failed to build PCRE2.')
 
     res = os.system('rm -rf build/httpd-%(version)s && '
             'tar -x -v -C build -f upstream/httpd-%(version)s.tar.gz && '
@@ -97,7 +95,7 @@ if not os.path.isfile(VERSION_HASH_FILE):
             '--enable-mpms-shared=all --enable-so --enable-rewrite '
             '--with-apr=%(builddir)s/bin/apr-1-config '
             '--with-apr-util=%(builddir)s/bin/apu-1-config '
-            '--with-pcre=%(builddir)s/bin/pcre-config && '
+            '--with-pcre=%(builddir)s/bin/pcre2-config && '
             'make && make install' % dict(builddir=builddir,
             version=HTTPD_VERSION))
 
@@ -140,7 +138,7 @@ for root, dirs, files in os.walk('src/httpd', topdown=False):
 long_description = open('README.rst').read()
 
 setup(name = 'mod_wsgi-httpd',
-    version = '%s.1' % HTTPD_VERSION,
+    version = '%s.2' % HTTPD_VERSION,
     description = 'Installer for Apache httpd server.',
     long_description = long_description,
     author = 'Graham Dumpleton',
