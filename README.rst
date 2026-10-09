@@ -28,7 +28,7 @@ hanging, it is almost certainly still compiling ``mod_wsgi-httpd``.
 
 The version of ``mod_wsgi-httpd`` is the version of the Apache HTTP
 Server it installs, followed by a build number. For example, version
-``2.4.68.2`` is the second build of this package for Apache 2.4.68.
+``2.4.69.1`` is the first build of this package for Apache 2.4.69.
 Each release of ``mod_wsgi-standalone`` requires one exact version of
 ``mod_wsgi-httpd``, so the Apache version you get is decided by the
 ``mod_wsgi-standalone`` release you install.
@@ -62,12 +62,12 @@ version in both places::
 
     [project]
     dependencies = [
-        "mod_wsgi-httpd==2.4.68.2",
+        "mod_wsgi-httpd==2.4.69.1",
         "mod_wsgi",
     ]
 
     [tool.uv.extra-build-dependencies]
-    mod-wsgi = ["mod_wsgi-httpd==2.4.68.2"]
+    mod-wsgi = ["mod_wsgi-httpd==2.4.69.1"]
 
 With ``pip`` it takes separate commands, the last with build isolation
 disabled, which in turn needs ``setuptools`` to be installed already::

@@ -22,7 +22,7 @@ ASF_URL = 'https://archive.apache.org/dist/'
 
 APR_VERSION = '1.7.6'
 APR_UTIL_VERSION = '1.6.5'
-HTTPD_VERSION = '2.4.68'
+HTTPD_VERSION = '2.4.69'
 
 APR_URL = ASF_URL + 'apr/apr-%s.tar.gz' % APR_VERSION
 APR_UTIL_URL = ASF_URL + 'apr/apr-util-%s.tar.gz' % APR_UTIL_VERSION
@@ -32,7 +32,7 @@ download_url(APR_URL)
 download_url(APR_UTIL_URL)
 download_url(HTTPD_URL)
 
-PCRE2_VERSION = '10.48'
+PCRE2_VERSION = '10.49'
 
 PCRE2_URL = 'https://github.com/PCRE2Project/pcre2/releases/download/pcre2-%s/pcre2-%s.tar.gz' % (PCRE2_VERSION, PCRE2_VERSION)
 
@@ -138,7 +138,7 @@ for root, dirs, files in os.walk('src/httpd', topdown=False):
 long_description = open('README.rst').read()
 
 setup(name = 'mod_wsgi-httpd',
-    version = '%s.2' % HTTPD_VERSION,
+    version = '%s.1' % HTTPD_VERSION,
     description = 'Installer for Apache httpd server.',
     long_description = long_description,
     author = 'Graham Dumpleton',
